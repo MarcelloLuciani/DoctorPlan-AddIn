@@ -1,0 +1,211 @@
+﻿/* Page-specific styling */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    width: 100%;
+    height: auto;
+    margin: 0 0 40px; /* bottom = footer height */
+}
+
+#content-main {
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.box {
+    width: 90%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.title-text-out {
+    width: 90%;
+    color: white;
+    float: left;
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+.title-text {
+    width: 100%;
+    color: white;
+    float: left;
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+.overView {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.description {
+    color: white;
+    margin: 10px;
+    font-size: 15px;
+}
+
+.funzionalita {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.separatore {
+    border: 1px solid;
+    margin-top: 10px; /* Spazio sopra */
+    margin-bottom: 10px; /* Spazio sotto */
+    color: white;
+    width: 90%;
+}
+
+.funzionalita-elemento {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.funzionalita-button {
+    width: 30%;
+    border-radius: 10px;
+    background-color: mintcream;
+    cursor: pointer;
+    transition: ease-in 0.2s;
+}
+
+.funzionalita-button:hover {
+    background-color: oldlace;
+}
+
+.funzionalita-desc {
+    width: 70%;
+    margin: 10px;
+    color: white;
+    font-size: 14px;
+}
+
+.funzionalita-elemento2 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.funzionalita-elemento2 p {
+     width: 100%;
+}
+
+.parte-superiore {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 10px;
+}
+
+.parte-superiore label {
+     width: 70%;
+     color: white;
+}
+
+.funzionalita-elemento3 {
+    color: white;
+}
+
+#table-rows {
+    display: flex;
+    width: 12%;
+    padding: 3px;
+}
+
+.parte-inferiore {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    margin: 10px;
+}
+
+.bottoni {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#cancel-table-button {
+    transition: ease-in 0.2s;
+    border: none;
+}
+
+#cancel-table-button:hover {
+    background-color: indianred;
+}
+
+.funzionalita-elemento3 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.funzionalita-elemento3 h2 {
+     width: 100%;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+}
+
+.funzionalita-elemento3 button {
+     width: 10%;
+     display: flex;
+     transition: ease-in 0.2s;
+     border: none;
+     color: black;
+}
+
+.funzionalita-elemento3 button:hover {
+     background-color: #cb7e46;
+}
+
+.footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+}
+
+.padding {
+    padding: 15px;
+}
+
+#notification-popup.MessageBanner {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    text-align: left;
+    height: inherit;
+    min-width: inherit;
+}
+
+#notification-popup .MessageBanner-text {
+    margin: 0;
+    padding: 18px 15px;
+    min-width: inherit;
+}
