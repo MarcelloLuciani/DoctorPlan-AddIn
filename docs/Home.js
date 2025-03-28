@@ -425,3 +425,26 @@ async function mostraRisultati(risultatoClingo) {
         errorHandler(error);
     }
 }
+
+// Funzione per recuperare il tema dell'applicazione e adattare il css di conseguenza
+function applyOfficeTheme() {
+    // Identify the current Office theme in use.
+    const currentOfficeTheme = Office.context.officeTheme.themeId;
+
+    if (currentOfficeTheme === Office.ThemeId.Colorful || currentOfficeTheme === Office.ThemeId.White) {
+        console.log("No changes required.");
+    }
+
+    // Get the colors of the current Office theme.
+    const bodyBackgroundColor = Office.context.officeTheme.bodyBackgroundColor;
+    const bodyForegroundColor = Office.context.officeTheme.bodyForegroundColor;
+    const controlBackgroundColor = Office.context.officeTheme.controlBackgroundColor;
+    const controlForegroundColor = Office.context.officeTheme.controlForegroundColor;
+
+    // Apply theme colors to a CSS class.
+    $("body").css("background-color", bodyBackgroundColor);
+	
+    if (Office.context.officeTheme.isDarkTheme()) {
+        $("h1").css("color", controlForegroundColor);
+    }
+}
