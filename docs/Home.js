@@ -25,7 +25,7 @@ let messageBanner;
             //$('#button-text1').text("Hello World!");
             //$('#button-desc1').text("Writes Hello World in cell A1");
 
-
+			applyOfficeTheme();
             
 
             $('#bottone-func-1').on('click', helloWorld);
@@ -443,7 +443,8 @@ function applyOfficeTheme() {
 
     // Apply theme colors to a CSS class.
     $("body").css("background-color", bodyBackgroundColor);
-	
+
+
     if (Office.context.officeTheme.isDarkTheme()) {
         $("h1").css("color", controlForegroundColor);
     }
