@@ -444,8 +444,11 @@ function applyOfficeTheme() {
     // Apply theme colors to a CSS class.
     $("body").css("background-color", bodyBackgroundColor);
 
-
-    if (Office.context.officeTheme.isDarkTheme()) {
-        $("h1").css("color", controlForegroundColor);
+    // Imposta il colore del testo in base alla luminosità del tema
+    if (Office.context.officeTheme.isDarkTheme && Office.context.officeTheme.isDarkTheme()) {
+        $("h1, p, span").css("color", "white");
+    } else {
+        $("h1, p, span").css("color", "black");
     }
+}
 }
