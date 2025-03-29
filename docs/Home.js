@@ -24,8 +24,6 @@ let messageBanner;
             // Imposta il testo per il pulsante Hello World
             //$('#button-text1').text("Hello World!");
             //$('#button-desc1').text("Writes Hello World in cell A1");
-
-			applyOfficeTheme();
             
 
             $('#bottone-func-1').on('click', helloWorld);
@@ -424,37 +422,4 @@ async function mostraRisultati(risultatoClingo) {
     } catch (error) {
         errorHandler(error);
     }
-}
-
-// Funzione per recuperare il tema dell'applicazione e adattare il css di conseguenza
-function applyOfficeTheme() {
-    // Identify the current Office theme in use.
-    const currentOfficeTheme = Office.context.officeTheme.themeId;
-
-    if (currentOfficeTheme === Office.ThemeId.Colorful || currentOfficeTheme === Office.ThemeId.White) {
-        console.log("No changes required.");
-    }
-
-    // Get the colors of the current Office theme.
-    const bodyBackgroundColor = Office.context.officeTheme.bodyBackgroundColor;
-    const bodyForegroundColor = Office.context.officeTheme.bodyForegroundColor;
-    const controlBackgroundColor = Office.context.officeTheme.controlBackgroundColor;
-    const controlForegroundColor = Office.context.officeTheme.controlForegroundColor;
-
-    // Apply theme colors to a CSS class.
-    $("body").css("background-color", bodyBackgroundColor);
-
-<<<<<<< HEAD
-    // Imposta il colore del testo in base alla luminosità del tema
-    if (Office.context.officeTheme.isDarkTheme && Office.context.officeTheme.isDarkTheme()) {
-        $("h1, p, span").css("color", "white");
-    } else {
-        $("h1, p, span").css("color", "black");
-=======
-
-    if (Office.context.officeTheme.isDarkTheme()) {
-        $("h1").css("color", controlForegroundColor);
->>>>>>> edc7d0bd29dfd000506e3a82004a304bdf111587
-    }
-}
 }
