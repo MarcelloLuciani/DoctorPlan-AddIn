@@ -59,6 +59,7 @@ main{
 
 /* Stile per l'overlay */
 .overlay {
+    z-index: 3;
     display: none;
     position: fixed;
     top: 0;
