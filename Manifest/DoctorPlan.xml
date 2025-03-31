@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp 
+          xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" 
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+          xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" 
+          xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+          xsi:type="TaskPaneApp">
+
+  <Id>3dd71447-ffc6-4ab9-999a-1a3cbd8fe0be</Id>
+	
+  <Version>1.0.0.0</Version>
+  <ProviderName>Friendly Penguin</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="DoctorPlan" />
+  <Description DefaultValue="DoctorPlan"/>
+  
+  <IconUrl DefaultValue="https://friendly-penguin.github.io/DoctorPlan-AddIn/Images/medical-report-32.png" />
+  <SupportUrl DefaultValue="https://github.com/Friendly-Penguin/DoctorPlan" />
+  
+  <AppDomains>
+    <AppDomain>friendly-penguin.github.io</AppDomain>
+  </AppDomains>
+
+  <Hosts>
+    <Host Name="Workbook" />
+  </Hosts>
+	
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://friendly-penguin.github.io/DoctorPlan-AddIn/" />
+  </DefaultSettings>
+
+  <Permissions>ReadWriteDocument</Permissions>
+
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
+    
+    <Hosts>
+      <Host xsi:type="Workbook">
+        
+		 <DesktopFormFactor>
+          <GetStarted>
+            <Title resid="Dp.GetStarted.Title"/>
+            <Description resid="Dp.GetStarted.Description"/>
+            <LearnMoreUrl resid="Dp.GetStarted.LearnMoreUrl"/>
+          </GetStarted>
+			  
+          <FunctionFile resid="Dp.DesktopFunctionFile.Url" />
+
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+			  <CustomTab id="Dp.TabCustom">
+				  <Group id="Dp.Group1">
+					  <Label resid="Dp.Group1Label"/>
+					  <Icon>
+						  <bt:Image size="16" resid="Dp.tpicon_16x16" />
+						  <bt:Image size="32" resid="Dp.tpicon_32x32" />
+						  <bt:Image size="80" resid="Dp.tpicon_80x80" />
+					  </Icon>
+					  <Control xsi:type="Button" id="Dp.TaskpaneButton">
+						  <Label resid="Dp.TaskpaneButton.Label" />
+						  <Supertip>
+							  <Title resid="Dp.TaskpaneButton.Label" />
+							  <Description resid="Dp.TaskpaneButton.Tooltip" />
+						  </Supertip>
+						  <Icon>
+							  <bt:Image size="16" resid="Dp.tpicon_16x16" />
+							  <bt:Image size="32" resid="Dp.tpicon_32x32" />
+							  <bt:Image size="80" resid="Dp.tpicon_80x80" />
+						  </Icon>
+						  <Action xsi:type="ShowTaskpane">
+							  <SourceLocation resid="Dp.Taskpane.Url" />
+						  </Action>
+					  </Control>
+				  </Group>
+				  <Label resid="Dp.TabCustom.Label"/>
+			  </CustomTab>
+		  </ExtensionPoint>
+       </DesktopFormFactor>
+		  
+      </Host>
+    </Hosts>
+    
+    <Resources>
+      <bt:Images>
+        <bt:Image id="Dp.tpicon_16x16" DefaultValue="https://friendly-penguin.github.io/DoctorPlan-AddIn/Images/medical-report-16.png" />
+        <bt:Image id="Dp.tpicon_32x32" DefaultValue="https://friendly-penguin.github.io/DoctorPlan-AddIn/Images/medical-report-32.png" />
+        <bt:Image id="Dp.tpicon_80x80" DefaultValue="https://friendly-penguin.github.io/DoctorPlan-AddIn/Images/medical-report-80.png" />
+      </bt:Images>
+		
+      <bt:Urls>
+        <bt:Url id="Dp.DesktopFunctionFile.Url" DefaultValue="https://friendly-penguin.github.io/DoctorPlan-AddIn/Functions/FunctionFile.html" />
+        <bt:Url id="Dp.Taskpane.Url" DefaultValue="https://friendly-penguin.github.io/DoctorPlan-AddIn/Home.html" />
+        <bt:Url id="Dp.GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812" />
+      </bt:Urls>
+		
+      <bt:ShortStrings>
+		<bt:String id="Dp.TabCustom.Label" DefaultValue="DoctorPlan" />
+        <bt:String id="Dp.TaskpaneButton.Label" DefaultValue="Show Taskpane" />
+		<bt:String id="Dp.FunctionButton.Label" DefaultValue="Run Function" />
+        <bt:String id="Dp.Group1Label" DefaultValue="Commands Group" />
+        <bt:String id="Dp.GetStarted.Title" DefaultValue="Get started with your DoctorPlan add-in!" />
+      </bt:ShortStrings>
+		
+      <bt:LongStrings>
+        <bt:String id="Dp.FunctionButton.Tooltip" DefaultValue="Click to run a sample function." />
+        <bt:String id="Dp.TaskpaneButton.Tooltip" DefaultValue="Click to Show a Taskpane" />
+        <bt:String id="Dp.GetStarted.Description" DefaultValue="Your DoctorPlan add-in loaded successfully. Go to the HOME tab and click the 'Show Taskpane' button to get started." />
+      </bt:LongStrings>
+		
+    </Resources>
+  </VersionOverrides>
+
+</OfficeApp>
