@@ -24,6 +24,8 @@ let messageBanner;
             // Imposta il testo per il pulsante Hello World
             //$('#button-text1').text("Hello World!");
             //$('#button-desc1').text("Writes Hello World in cell A1");
+
+
             
 
             $('#bottone-func-1').on('click', helloWorld);
@@ -162,8 +164,6 @@ function deleteTable() {
 
                 // Dopo aver effettuato l'autofit, possiamo eliminare la tabella
                 table.delete(); // Elimina la tabella
-                sheet.getUsedRange().select();  // Seleziona un intervallo diverso
-                await context.sync();
                 console.log("Tabella eliminata con intestazione Chirurghi - Turni");
             }
         }
@@ -238,6 +238,9 @@ async function risolviClingo() {
         // 5. Mostri i risultati
         console.log(risposta);
         mostraRisultati(risposta);
+
+        // 6. Crea la tabella di risposta
+        createScheduleFromClingo(risposta);
 
     } catch (error) {
         errorHandler(error);
@@ -425,3 +428,187 @@ async function mostraRisultati(risultatoClingo) {
         errorHandler(error);
     }
 }
+
+// Funzione per creare una tabella con la risposta ricevuta da Clingo
+// Funzione principale che genera la tabella turni in Excel
+function generateScheduleTable(clingoResponse) {
+    // Verifica se clingoResponse è già un oggetto o è una stringa JSON
+    const data = typeof clingoResponse === 'string' ? JSON.parse(clingoResponse) : clingoResponse;
+
+    const solution = data.Call[0].Witnesses[0].Value;
+
+    // Estrazione dei dati rilevanti
+    const giorni = solution.filter(atom => atom.startsWith('giorno')).map(g => {
+        const match = g.match(/giorno\((.*?)\)/);
+        return match ? match[1] : null;
+    });
+
+    // Estrai informazioni sui chirurghi e i loro turni
+    const infoChirurghi = solution.filter(atom => atom.startsWith('chirurgo')).map(c => {
+        const match = c.match(/chirurgo\('(.*?)',(.*?)\)/);
+        if (match) {
+            return {
+                nome: match[1],
+                turno: match[2]
+            };
+        }
+        return null;
+    });
+
+    // Estrai gli orari di lavoro
+    const orariLavoro = solution.filter(atom => atom.startsWith('orario')).map(o => {
+        const match = o.match(/orario\('(.*?)',(.*?)\)/);
+        if (match) {
+            return {
+                nome: match[1],
+                giorno: match[2]
+            };
+        }
+        return null;
+    });
+
+    // Crea una struttura dati per i turni
+    const turniChirurghi = {};
+    infoChirurghi.forEach(info => {
+        if (info) {
+            turniChirurghi[info.nome] = info.turno;
+        }
+    });
+
+    // Crea la mappatura chirurgo -> giorni
+    const giorniChirurghi = {};
+    orariLavoro.forEach(orario => {
+        if (orario) {
+            if (!giorniChirurghi[orario.nome]) {
+                giorniChirurghi[orario.nome] = [];
+            }
+            giorniChirurghi[orario.nome].push(orario.giorno);
+        }
+    });
+
+    // Usa Office JS per creare la tabella Excel
+    return Excel.run(async (context) => {
+        // Cerca se esiste già un foglio chiamato "Turni"
+        let sheet;
+        const sheets = context.workbook.worksheets;
+        sheets.load("items/name");
+
+        await context.sync();
+
+        // Verifica se il foglio "Turni" esiste già
+        let turniSheet = sheets.items.find(s => s.name === "Turni");
+
+        if (turniSheet) {
+            // Se esiste, lo cancelliamo e ricreiamo
+            turniSheet.delete();
+            sheet = sheets.add("Turni");
+        } else {
+            // Se non esiste, lo creiamo
+            sheet = sheets.add("Turni");
+        }
+
+        // Pulisci il foglio per sicurezza
+        sheet.getRange().clear();
+
+        // Intestazioni
+        sheet.getRange("A1").values = [["Chirurgo"]];
+        sheet.getRange("B1").values = [["Turno"]];
+
+        // Aggiungi i giorni come intestazioni
+        const dayMap = {
+            "lun": "Lunedì",
+            "mar": "Martedì",
+            "mer": "Mercoledì",
+            "giov": "Giovedì",
+            "ven": "Venerdì",
+            "sab": "Sabato"
+        };
+
+        giorni.forEach((giorno, index) => {
+            const cell = sheet.getCell(0, index + 2);
+            cell.values = [[dayMap[giorno] || giorno]];
+        });
+
+        // Aggiungi i dati dei chirurghi
+        let row = 1;
+        Object.keys(turniChirurghi).forEach(chirurgo => {
+            // Nome chirurgo
+            sheet.getCell(row, 0).values = [[chirurgo]];
+
+            // Turno
+            sheet.getCell(row, 1).values = [[turniChirurghi[chirurgo]]];
+
+            // Giorni di lavoro
+            giorni.forEach((giorno, index) => {
+                const cell = sheet.getCell(row, index + 2);
+                if (giorniChirurghi[chirurgo] && giorniChirurghi[chirurgo].includes(giorno)) {
+                    cell.values = [["✓"]];
+                    // Colora la cella in base al turno
+                    if (turniChirurghi[chirurgo] === "mattina") {
+                        cell.format.fill.color = "#FFEB9C"; // Giallo chiaro per mattina
+                    } else if (turniChirurghi[chirurgo] === "pomeriggio") {
+                        cell.format.fill.color = "#C5E0B4"; // Verde chiaro per pomeriggio
+                    }
+                } else {
+                    cell.values = [[""]];
+                }
+            });
+
+            row++;
+        });
+
+        // Formattazione tabella
+        const tableRange = sheet.getRange("A1:H" + (row));
+        tableRange.format.autofitColumns();
+        tableRange.format.autofitRows();
+
+        // Formattazione intestazioni
+        const headerRow = sheet.getRange("A1:H1");
+        headerRow.format.font.bold = true;
+        headerRow.format.fill.color = "#4472C4";
+        headerRow.format.font.color = "white";
+
+        // Aggiunge bordi alla tabella
+        tableRange.format.borders.getItem('EdgeTop').style = 'Continuous';
+        tableRange.format.borders.getItem('EdgeBottom').style = 'Continuous';
+        tableRange.format.borders.getItem('EdgeLeft').style = 'Continuous';
+        tableRange.format.borders.getItem('EdgeRight').style = 'Continuous';
+        tableRange.format.borders.getItem('InsideHorizontal').style = 'Continuous';
+        tableRange.format.borders.getItem('InsideVertical').style = 'Continuous';
+
+        // Aggiungi legenda per i colori
+        sheet.getCell(row + 2, 0).values = [["Legenda:"]];
+        sheet.getCell(row + 2, 0).format.font.bold = true;
+
+        sheet.getCell(row + 3, 0).values = [["Mattina"]];
+        sheet.getCell(row + 3, 1).values = [[""]];
+        sheet.getCell(row + 3, 1).format.fill.color = "#FFEB9C";
+
+        sheet.getCell(row + 4, 0).values = [["Pomeriggio"]];
+        sheet.getCell(row + 4, 1).values = [[""]];
+        sheet.getCell(row + 4, 1).format.fill.color = "#C5E0B4";
+
+        // Attiva il foglio per renderlo visibile
+        sheet.activate();
+
+        await context.sync();
+    });
+}
+
+// Esempio di utilizzo:
+async function createScheduleFromClingo(clingoResponse) {
+    try {
+        await generateScheduleTable(clingoResponse);
+        console.log("Tabella dei turni generata con successo nel foglio 'Turni'!");
+    } catch (error) {
+        console.error("Errore nella generazione della tabella:", error);
+        console.log("Tipo di dato ricevuto:", typeof clingoResponse);
+        if (typeof clingoResponse === 'string') {
+            console.log("Primi 100 caratteri:", clingoResponse.substring(0, 100));
+        } else {
+            console.log("Struttura oggetto:", JSON.stringify(clingoResponse).substring(0, 100));
+        }
+    }
+}
+
+
