@@ -12,19 +12,19 @@ main{
     
 }
 
-.destra{
+.sinistra{
     width: 49%;
     display: flex;
     align-items: start;
 }
 
 
-.sinistra{
+.destra{
     width: 49%;
     display: flex;
     justify-content: center;
 }
 
-.sinistra img{
+.destra img{
     width: 50%;
 }
