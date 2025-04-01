@@ -15,7 +15,7 @@
   <Description DefaultValue="DoctorPlan"/>
   
   <IconUrl DefaultValue="https://friendly-penguin.github.io/DoctorPlan-AddIn/Images/medical-report-32.png" />
-  <SupportUrl DefaultValue="https://github.com/Friendly-Penguin/DoctorPlan" />
+  <SupportUrl DefaultValue="https://friendly-penguin.github.io/DoctorPlan-AddIn/" />
   
   <AppDomains>
     <AppDomain>friendly-penguin.github.io</AppDomain>
@@ -26,7 +26,7 @@
   </Hosts>
 	
   <DefaultSettings>
-    <SourceLocation DefaultValue="https://friendly-penguin.github.io/DoctorPlan-AddIn/" />
+    <SourceLocation DefaultValue="https://friendly-penguin.github.io/DoctorPlan-AddIn/AddIn_Files/" />
   </DefaultSettings>
 
   <Permissions>ReadWriteDocument</Permissions>
@@ -87,7 +87,7 @@
 		
       <bt:Urls>
         <bt:Url id="Dp.DesktopFunctionFile.Url" DefaultValue="https://friendly-penguin.github.io/DoctorPlan-AddIn/Functions/FunctionFile.html" />
-        <bt:Url id="Dp.Taskpane.Url" DefaultValue="https://friendly-penguin.github.io/DoctorPlan-AddIn/Home.html" />
+        <bt:Url id="Dp.Taskpane.Url" DefaultValue="https://friendly-penguin.github.io/DoctorPlan-AddIn/AddIn_Files/Home.html" />
         <bt:Url id="Dp.GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812" />
       </bt:Urls>
 		
