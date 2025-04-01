@@ -11,6 +11,21 @@ main{
        
 }
 
+.tutorial{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.tutorial h1{
+    margin-bottom: 0;
+}
+
+.tutorial h4{
+    margin-top: 5px;
+}
+
 .container{
     width: 100%;
     display: flex;
@@ -37,6 +52,7 @@ main{
 
 .sinistra li.active {
     background: #ddd;
+    font-weight: 550;
 }
 
 
