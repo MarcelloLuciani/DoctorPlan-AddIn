@@ -162,6 +162,8 @@ function deleteTable() {
 
                 // Dopo aver effettuato l'autofit, possiamo eliminare la tabella
                 table.delete(); // Elimina la tabella
+                sheet.getUsedRange().select();  // Seleziona un intervallo diverso
+                await context.sync();
                 console.log("Tabella eliminata con intestazione Chirurghi - Turni");
             }
         }
