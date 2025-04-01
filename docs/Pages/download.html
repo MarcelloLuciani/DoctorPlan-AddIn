@@ -6,15 +6,15 @@
     <title>DoctorPlan</title>
     <link href="https://friendly-penguin.github.io/DoctorPlan-AddIn/Pages_Css/download.css" rel="stylesheet" type="text/css">
     <link href="https://friendly-penguin.github.io/DoctorPlan-AddIn/Pages_Css/common.css" rel="stylesheet" type="text/css">
+    <!-- <link href="/Pages_Css/download.css" rel="stylesheet" type="text/css"> -->
     <link href="https://friendly-penguin.github.io/DoctorPlan-AddIn/Pages_Css/navbar.css" rel="stylesheet" type="text/css">
-    
 </head>
 
 <body>
 
     <div class="navbar">
         <a class="home" href="https://friendly-penguin.github.io/DoctorPlan-AddIn/">DoctorPlan</a>
-        <a href="https://friendly-penguin.github.io/DoctorPlan-AddIn/Pages/download.html">Scarica</a>
+        <a class="download" href="https://friendly-penguin.github.io/DoctorPlan-AddIn/Pages/download.html">Scarica</a>
     </div>
 
     <main>
@@ -30,14 +30,14 @@
             
             <div class="sinistra">
                 <h2>Passaggi:</h2>
-                <ul>
-                    <li onmouseover="changeImage('https://friendly-penguin.github.io/DoctorPlan-AddIn/HTML_images/step1.jpg')">Creare un nuovo foglio di calcolo/aprirne uno esistente</li>
-                    <li onmouseover="changeImage('https://friendly-penguin.github.io/DoctorPlan-AddIn/HTML_images/step2.jpg')">Recarsi nella sezione <b>HOME</b> > <b>Componenti Aggiuntivi</b> > <b>Altri componenti Aggiuntivi</b></li>
-                    <li onmouseover="changeImage('https://friendly-penguin.github.io/DoctorPlan-AddIn/HTML_images/step3.jpg')">Nel menù cliccare su "MIEI COMPONENTI AGGIUNTIVI"</li>
-                    <li onmouseover="changeImage('https://friendly-penguin.github.io/DoctorPlan-AddIn/HTML_images/step4.jpg')">Cliccare su "Carica mio componente aggiuntivo"</li>
-                    <li onmouseover="changeImage('https://friendly-penguin.github.io/DoctorPlan-AddIn/HTML_images/step5.jpg')">Caricare il DoctorPlan.xml appena scaricato</li>
-                    <li onmouseover="changeImage('https://friendly-penguin.github.io/DoctorPlan-AddIn/HTML_images/step6.jpg')">Il componente è ora disponibile nella barra di navigazione!</li>
-                </ul>
+                <ol>
+                    <li onclick="changeImage('https://friendly-penguin.github.io/DoctorPlan-AddIn/HTML_images/step1.jpg', this)">Creare un nuovo foglio di calcolo/aprirne uno esistente</li>
+                    <li onclick="changeImage('https://friendly-penguin.github.io/DoctorPlan-AddIn/HTML_images/step2.jpg', this)">Recarsi nella sezione <b>HOME</b> > <b>Componenti Aggiuntivi</b> > <b>Altri componenti Aggiuntivi</b></li>
+                    <li onclick="changeImage('https://friendly-penguin.github.io/DoctorPlan-AddIn/HTML_images/step3.jpg', this)">Nel menù cliccare su "MIEI COMPONENTI AGGIUNTIVI"</li>
+                    <li onclick="changeImage('https://friendly-penguin.github.io/DoctorPlan-AddIn/HTML_images/step4.jpg', this)">Cliccare su "Carica mio componente aggiuntivo"</li>
+                    <li onclick="changeImage('https://friendly-penguin.github.io/DoctorPlan-AddIn/HTML_images/step5.jpg', this)">Caricare il DoctorPlan.xml appena scaricato</li>
+                    <li onclick="changeImage('https://friendly-penguin.github.io/DoctorPlan-AddIn/HTML_images/step6.jpg', this)">Il componente è ora disponibile nella barra di navigazione!</li>
+                </ol>
             </div>
 
             <div class="destra">
@@ -69,11 +69,28 @@
     </main>
 
     <script>
-        function changeImage(imageSrc) {
-            document.getElementById("tutorialImage").src = imageSrc;
-            document.getElementById("overlayImage").src = imageSrc;
+        function changeImage(imageSrc, element) {
+            // Check if element already has active class
+            const isAlreadyActive = element.classList.contains('active');
+    
+            // Remove active class from all list items
+            const listItems = document.querySelectorAll('.sinistra li');
+            listItems.forEach(item => {
+                item.classList.remove('active');
+            });
+    
+            // If clicking on already active element, deselect it and show default image
+            if (isAlreadyActive) {
+                document.getElementById("tutorialImage").src = "https://friendly-penguin.github.io/DoctorPlan-AddIn/HTML_images/default.jpg";
+                document.getElementById("overlayImage").src = "https://friendly-penguin.github.io/DoctorPlan-AddIn/HTML_images/default.jpg";
+            } else {
+                // Add active class to the clicked item
+                element.classList.add('active');
+                // Change the image
+                document.getElementById("tutorialImage").src = imageSrc;
+                document.getElementById("overlayImage").src = imageSrc;
+            }
         }
-
         function openOverlay() {
             document.getElementById("overlay").style.display = "flex";
         }
