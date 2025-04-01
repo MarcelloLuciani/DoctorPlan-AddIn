@@ -20,7 +20,7 @@
 .home{
     margin-left: 10px;
     width: calc(90% - 10px);
-
+    font-weight: bold;
 }
 
 .download{

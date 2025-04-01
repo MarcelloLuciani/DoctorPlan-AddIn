@@ -39,22 +39,26 @@ main{
     background: #ddd;
 }
 
-.destra{
+
+.destra {
     width: 59%;
     height: 444px;
     background: #f4f4f4;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden; /* Questo è fondamentale per tagliare le parti che eccedono */
+    position: relative; /* Per posizionamento più preciso */
 }
 
-.destra img{
+.destra img {
     max-width: 95%;
+    max-height: 95%; /* Riducilo dal 100% al 95% per lasciare un po' di margine */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
-    
-
+    object-fit: contain; /* Assicura che l'immagine mantenga le sue proporzioni */
+    display: block; /* Evita spazi extra sotto l'immagine */
 }
 
 /* Stile per l'overlay */
