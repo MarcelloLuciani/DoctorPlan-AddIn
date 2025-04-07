@@ -14,8 +14,8 @@
   <DisplayName DefaultValue="DoctorPlan" />
   <Description DefaultValue="DoctorPlan"/>
   
-  <IconUrl DefaultValue="https://friendly-penguin.github.io/DoctorPlan-AddIn/Images/medical-report-32.png" />
-  <SupportUrl DefaultValue="https://friendly-penguin.github.io/DoctorPlan-AddIn/" />
+  <IconUrl DefaultValue="https://marcelloluciani.github.io//DoctorPlan-AddIn/Images/medical-report-32.png" />
+  <SupportUrl DefaultValue="https://marcelloluciani.github.io//DoctorPlan-AddIn/" />
   
   <AppDomains>
     <AppDomain>friendly-penguin.github.io</AppDomain>
@@ -26,7 +26,7 @@
   </Hosts>
 	
   <DefaultSettings>
-    <SourceLocation DefaultValue="https://friendly-penguin.github.io/DoctorPlan-AddIn/AddIn_Files/" />
+    <SourceLocation DefaultValue="https://marcelloluciani.github.io//DoctorPlan-AddIn/AddIn_Files/" />
   </DefaultSettings>
 
   <Permissions>ReadWriteDocument</Permissions>
@@ -80,14 +80,14 @@
     
     <Resources>
       <bt:Images>
-        <bt:Image id="Dp.tpicon_16x16" DefaultValue="https://friendly-penguin.github.io/DoctorPlan-AddIn/Images/medical-report-16.png" />
-        <bt:Image id="Dp.tpicon_32x32" DefaultValue="https://friendly-penguin.github.io/DoctorPlan-AddIn/Images/medical-report-32.png" />
-        <bt:Image id="Dp.tpicon_80x80" DefaultValue="https://friendly-penguin.github.io/DoctorPlan-AddIn/Images/medical-report-80.png" />
+        <bt:Image id="Dp.tpicon_16x16" DefaultValue="https://marcelloluciani.github.io//DoctorPlan-AddIn/Images/medical-report-16.png" />
+        <bt:Image id="Dp.tpicon_32x32" DefaultValue="https://marcelloluciani.github.io//DoctorPlan-AddIn/Images/medical-report-32.png" />
+        <bt:Image id="Dp.tpicon_80x80" DefaultValue="https://marcelloluciani.github.io//DoctorPlan-AddIn/Images/medical-report-80.png" />
       </bt:Images>
 		
       <bt:Urls>
-        <bt:Url id="Dp.DesktopFunctionFile.Url" DefaultValue="https://friendly-penguin.github.io/DoctorPlan-AddIn/Functions/FunctionFile.html" />
-        <bt:Url id="Dp.Taskpane.Url" DefaultValue="https://friendly-penguin.github.io/DoctorPlan-AddIn/AddIn_Files/Home.html" />
+        <bt:Url id="Dp.DesktopFunctionFile.Url" DefaultValue="https://marcelloluciani.github.io//DoctorPlan-AddIn/Functions/FunctionFile.html" />
+        <bt:Url id="Dp.Taskpane.Url" DefaultValue="https://marcelloluciani.github.io//DoctorPlan-AddIn/AddIn_Files/Home.html" />
         <bt:Url id="Dp.GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812" />
       </bt:Urls>
 		
