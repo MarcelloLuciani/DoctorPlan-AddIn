@@ -1,6 +1,6 @@
-	// Funzione per creare una tabella con chirurghi e turni
-	function createSurgeonShiftTable(numRows) {
-		Excel.run(function (context) {
+    // Funzione per creare una tabella con chirurghi e turni - EXCEL
+function createSurgeonShiftTable(numRows) {
+    Excel.run(function (context) {
         // Recuperiamo il foglio di lavoro attivo
         var sheet = context.workbook.worksheets.getActiveWorksheet();
 
@@ -24,11 +24,19 @@
         table.name = "TabellaChirurghiTurni";
 
         // Sistemo la larghezza delle colonne per visualizzare meglio i dati
-        sheet.getRange("A:A").format.columnWidth = 150;
-        sheet.getRange("B:B").format.columnWidth = 150;
-        sheet.getRange("C:C").format.columnWidth = 150;
-        sheet.getRange("D:D").format.columnWidth = 150;
 
+        if (Office.context.requirements.isSetSupported("ExcelApi", "1.2")) {
+            sheet.getUsedRange().format.autofitColumns();
+            sheet.getUsedRange().format.autofitRows();
+
+        } else {
+
+            sheet.getRange("A:A").format.columnWidth = 150;
+            sheet.getRange("B:B").format.columnWidth = 150;
+            sheet.getRange("C:C").format.columnWidth = 150;
+            sheet.getRange("D:D").format.columnWidth = 150;
+        }
+        
         // Creiamo un array di righe vuote per la tabella
         var data = [];
         for (var i = 0; i < numRows; i++) {
@@ -81,9 +89,9 @@
     });
 }
 
-	// Funzione che gestisce il cambiamento nelle celle della tabella
-	function handleTableChange(event) {
-		return Excel.run(function (context) {
+	// Funzione che gestisce il cambiamento nelle celle della tabella - EXCEL
+function handleTableChange(event) {
+    return Excel.run(function (context) {
         // Verifichiamo se il cambiamento è avvenuto nella colonna B (Turni Disponibili)
         var changedRange = context.workbook.worksheets.getActiveWorksheet().getRange(event.address);
         changedRange.load(["columnIndex", "values", "columnCount", "rowIndex", "rowCount"]);
@@ -107,43 +115,43 @@
                 }
             }
         });
-		}).catch(function (error) {
-			console.error("Errore: " + error);
-		});
-	}
-	
-	// Funzione per eliminare la tabella con intestazione "Chirurghi" e "Turni"
-	function deleteTable() {
-		Excel.run(async function (context) {
-			var sheet = context.workbook.worksheets.getActiveWorksheet();
-			var tables = sheet.tables; // Ottiene tutte le tabelle nel foglio
-			tables.load("items/name"); // Carica i nomi delle tabelle
+    }).catch(function (error) {
+        console.error("Errore: " + error);
+    });
+}
 
-			await context.sync(); // Sincronizza per ottenere i dati
+    // Funzione per eliminare la tabella con intestazione "Chirurghi" e "Turni" - EXCEL
+function deleteTable() {
+    Excel.run(async function (context) {
+        var sheet = context.workbook.worksheets.getActiveWorksheet();
+        var tables = sheet.tables; // Ottiene tutte le tabelle nel foglio
+        tables.load("items/name"); // Carica i nomi delle tabelle
 
-			for (let table of tables.items) {
-				
-				if (table.name === "TabellaChirurghiTurni") {
-					let tableRange = table.getRange(); // Ottiene l'intervallo della tabella
-					tableRange.format.autofitColumns();
-					tableRange.format.columnWidth = 48;
-					await context.sync(); // Assicuriamoci che la formattazione sia applicata
+        await context.sync(); // Sincronizza per ottenere i dati
 
-					// Dopo aver effettuato l'autofit, possiamo eliminare la tabella
-					table.delete(); // Elimina la tabella
-					console.log("Tabella Chirurghi - Turni eliminata con successo!");
-				}
-			}
+        for (let table of tables.items) {
+            
+            if (table.name === "TabellaChirurghiTurni") {
+                let tableRange = table.getRange(); // Ottiene l'intervallo della tabella
+                tableRange.format.autofitColumns();
+                tableRange.format.columnWidth = 48;
+                await context.sync(); // Assicuriamoci che la formattazione sia applicata
 
-			return context.sync(); // Ultima sincronizzazione per garantire che tutto sia stato applicato correttamente
-		}).catch(function (error) {
-			console.error("Error: " + error);
-		});
-	}
-	
-	// Funzione per la lettura dei dati da Excel
+                // Dopo aver effettuato l'autofit, possiamo eliminare la tabella
+                table.delete(); // Elimina la tabella
+                console.log("Tabella Chirurghi - Turni eliminata con successo!");
+            }
+        }
+
+        return context.sync(); // Ultima sincronizzazione per garantire che tutto sia stato applicato correttamente
+
+    }).catch(function (error) {
+            console.error("Error: " + error);
+        });
+}
+
+    // Funzione per la lettura dei dati da Excel - EXCEL
 async function leggiTabella() {
-	
     try {
         return await Excel.run(async (context) => {
 
@@ -204,7 +212,7 @@ async function leggiTabella() {
     }
 }
 
-	// Funzione per mostrare i risultati di Clingo in un nuovo foglio creato appositamente
+    // Funzione per mostrare i risultati di Clingo in un nuovo foglio creato appositamente - EXCEL
 async function mostraRisultati(risultatoClingo) {
     try {
         await Excel.run(async (context) => {
@@ -244,7 +252,7 @@ async function mostraRisultati(risultatoClingo) {
     }
 }
 
-	// Funzione per creare una tabella con la risposta ricevuta da Clingo
+    // Funzione per creare una tabella con la risposta ricevuta da Clingo - EXCEL
 function generateScheduleTable(clingoResponse) {
     // Verifica se clingoResponse è già un oggetto o è una stringa JSON
     const data = typeof clingoResponse === 'string' ? JSON.parse(clingoResponse) : clingoResponse;

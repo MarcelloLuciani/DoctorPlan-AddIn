@@ -36,29 +36,31 @@ let messageBanner;
 
 
             $('#btnRisolvi').on('click', risolviClingo);
+            //$('#btnNewFuncTest').on('click', newFunctTest);
 
         });
     });
 
-// Helper function for treating errors
+
+    // Helper function for treating errors
 function errorHandler(error) {
-        // Always be sure to catch any accumulated errors that bubble up from the Excel.run execution
-        showNotification("Error", error);
-        console.log("Error: " + error);
-        if (error instanceof OfficeExtension.Error) {
-            console.log("Debug info: " + JSON.stringify(error.debugInfo));
-        }
+    // Always be sure to catch any accumulated errors that bubble up from the Excel.run execution
+    showNotification("Error", error);
+    console.log("Error: " + error);
+    if (error instanceof OfficeExtension.Error) {
+        console.log("Debug info: " + JSON.stringify(error.debugInfo));
+    }
 }
 
-	// Helper function for displaying notifications
+    // Helper function for displaying notifications
 function showNotification(header, content) {
-        $("#notification-header").text(header);
-        $("#notification-body").text(content);
-        messageBanner.showBanner();
-        messageBanner.toggleExpansion();
+    $("#notification-header").text(header);
+    $("#notification-body").text(content);
+    messageBanner.showBanner();
+    messageBanner.toggleExpansion();
 }
 
-	// Funzione che gestisce la risoluzione del problema dei turni dei chirurghi
+    // Funzione che gestisce la risoluzione del problema dei turni dei chirurghi - HOME
 async function risolviClingo() {
     try {
 
@@ -90,7 +92,7 @@ async function risolviClingo() {
     }
 }
 
-	// Funzione principale che genera la tabella turni in Excel
+    // Funzione principale che genera la tabella turni in Excel - HOME
 async function createScheduleFromClingo(clingoResponse) {
     try {
         console.log("Elaborazione risposta di Clingo:", clingoResponse);

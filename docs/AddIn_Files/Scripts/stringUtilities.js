@@ -1,4 +1,4 @@
-	// Funzione per formattare i dati letti da Excel in regole valide per Clingo
+    // Funzione per formattare i dati letti da Excel in regole valide per Clingo - STRING
 function formatter(input) {
 
     let datiFormattati;
@@ -22,28 +22,39 @@ function formatter(input) {
 
     if (typeof input === 'string') {
 
-        datiFormattati = "(" + String(input.replace(/[/[/]']/g, "")) + ").";
+        datiFormattati = "chirurgo(" + String(input.replace(/[/[/]']/g, "")).toLowerCase() + ").";
 
     } else if (Array.isArray(input)) {
 
-        let nome = String(input[0]).replace(/[/[/]']/g, "");
-        let componente = String(input[1]).replace(/[/[/]']/g, "");
+        let nome = String(input[0]).replace(/[/[/]']/g, "").toLowerCase();
+        let componente = String(input[1]).replace(/[/[/]']/g, "").toLowerCase();
 
 
-        if (componente === "Entrambe") { // Caso 1 : Disponibilità
+        if (input[2] === "turn") {  //Caso 1: Turno
 
-            datiFormattati = "(" + nome + ", mattina)." + " (" + nome + ", pomeriggio).";
+            if (componente === "entrambe") {
+                datiFormattati = "turno(" + nome + ", mattina). " +
+                    "turno(" + nome + ", pomeriggio).";
+            } else {
+                datiFormattati = "turno(" + nome + ", " + componente + ").";
+            }
 
-        } else if (componente !== "Nessuna") {  // Caso 2 : Preferenza
+        } else if (input[2] == "preference") { //Caso 2: Preferenza
 
-            datiFormattati = "(" + nome + ", " + componente + ").";
+            if (componente !== "nessuna") {
+
+                datiFormattati = "preferenza(" + nome + ", " + componente + ").";
+
+            } else {
+                datiFormattati = "";
+            }
 
 
-        } else { // componente == "Nessuna" 
+        } else { //Caso 3: Disponibilità
 
-            datiFormattati = "";
+            datiFormattati = "disponibilita(" + nome + ", " + componente + ").";
         }
-
+        
 
 
     } else
@@ -53,11 +64,11 @@ function formatter(input) {
 
 }
 
-
+    //Funzione per portare tutti i dati in una stringa per Clingo - STRING
 function stringify(input) {
     let stringa = "";
     for (let i = 0; i < input.length; i++) {
         stringa += input[i].name + " " + input[i].turn + " " + input[i].preference + " " + input[i].disponibility + " ";
     }
-    return stringa; // Rimuoviamo i backtick che causavano problemi
+    return stringa; 
 }
