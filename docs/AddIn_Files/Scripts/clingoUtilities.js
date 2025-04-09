@@ -1,4 +1,4 @@
-// Funzione per eseguire Clingo con i dati letti dal foglio
+	// Funzione per eseguire Clingo con i dati letti dal foglio
 async function eseguiClingoWasm(mappaDati) {
     try {
         // Inizializza Clingo con il file WASM 

@@ -1,4 +1,4 @@
-// Funzione per formattare i dati letti da Excel in regole valide per Clingo
+	// Funzione per formattare i dati letti da Excel in regole valide per Clingo
 function formatter(input) {
 
     let datiFormattati;
@@ -51,4 +51,13 @@ function formatter(input) {
 
     return datiFormattati;
 
+}
+
+
+function stringify(input) {
+    let stringa = "";
+    for (let i = 0; i < input.length; i++) {
+        stringa += input[i].name + " " + input[i].turn + " " + input[i].preference + " " + input[i].disponibility + " ";
+    }
+    return stringa; // Rimuoviamo i backtick che causavano problemi
 }
