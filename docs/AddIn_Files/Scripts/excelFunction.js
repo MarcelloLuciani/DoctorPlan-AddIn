@@ -1,72 +1,4 @@
-let messageBanner;
-
-
-    // Initialization when Office JS and JQuery are ready.
-    Office.onReady(() => {
-        $(() => {
-            // Initialize he Office Fabric UI notification mechanism and hide it.
-            const element = document.querySelector('.MessageBanner');
-            messageBanner = new components.MessageBanner(element);
-            messageBanner.hideBanner();
-            
-            //// If not using Excel 2016 or later, use fallback logic.
-            //if (!Office.context.requirements.isSetSupported('ExcelApi', '1.1')) {
-            //    $("#template-description").text("This sample will display the value of the cells that you have selected in the spreadsheet.");
-            //    $('#button-text').text("Display!");
-            //    $('#button-desc').text("Display the selection");
-
-            //    $('#highlight-button').on('click',displaySelectedCells);
-            //    return;
-            //}
-
-
-            // Imposta il testo per il pulsante Hello World
-            //$('#button-text1').text("Hello World!");
-            //$('#button-desc1').text("Writes Hello World in cell A1");
-
-
-            
-            //Funzione base
-            $('#bottone-func-1').on('click', helloWorld);
-
-            //Funzioni per gestire la tabella
-            $('#cancel-table-button').on('click', deleteTable);
-
-            // Gestore per il pulsante di conferma nel form
-            $('#confirm-table-button').on('click', function () {
-                // Ottieni il numero di righe dal campo di input
-                const rows = parseInt($('#table-rows').val()) || 2; // Default a 2 se non valido
-
-                // Crea la tabella con il numero di righe specificato
-                createSurgeonShiftTable(rows);
-            });
-
-
-            $('#btnRisolvi').on('click', risolviClingo);
-            $('#btnNewFuncTest').on('click', newFunctTest);
-
-        });
-    });
-
-	// Helper function for treating errors
-	function errorHandler(error) {
-        // Always be sure to catch any accumulated errors that bubble up from the Excel.run execution
-        showNotification("Error", error);
-        console.log("Error: " + error);
-        if (error instanceof OfficeExtension.Error) {
-            console.log("Debug info: " + JSON.stringify(error.debugInfo));
-        }
-	}
-
-	// Helper function for displaying notifications
-	function showNotification(header, content) {
-        $("#notification-header").text(header);
-        $("#notification-body").text(content);
-        messageBanner.showBanner();
-        messageBanner.toggleExpansion();
-	}
-	
-	// Funzione per creare una tabella con chirurghi e turni
+// Funzione per creare una tabella con chirurghi e turni
 	function createSurgeonShiftTable(numRows) {
 		Excel.run(function (context) {
         // Recuperiamo il foglio di lavoro attivo
@@ -175,7 +107,38 @@ let messageBanner;
                 }
             }
         });
-    }).catch(function (error) {
-        console.error("Errore: " + error);
-    });
-}
+		}).catch(function (error) {
+			console.error("Errore: " + error);
+		});
+	}
+	
+	
+	// Funzione per eliminare la tabella con intestazione "Chirurghi" e "Turni"
+	function deleteTable() {
+		Excel.run(async function (context) {
+			var sheet = context.workbook.worksheets.getActiveWorksheet();
+			var tables = sheet.tables; // Ottiene tutte le tabelle nel foglio
+			tables.load("items/name"); // Carica i nomi delle tabelle
+
+			await context.sync(); // Sincronizza per ottenere i dati
+
+			for (let table of tables.items) {
+				
+				if (table.name === "TabellaChirurghiTurni") {
+					let tableRange = table.getRange(); // Ottiene l'intervallo della tabella
+					tableRange.format.autofitColumns();
+					tableRange.format.columnWidth = 48;
+					await context.sync(); // Assicuriamoci che la formattazione sia applicata
+
+					// Dopo aver effettuato l'autofit, possiamo eliminare la tabella
+					table.delete(); // Elimina la tabella
+					console.log("Tabella Chirurghi - Turni eliminata con successo!");
+				}
+			}
+
+			return context.sync(); // Ultima sincronizzazione per garantire che tutto sia stato applicato correttamente
+		}).catch(function (error) {
+			console.error("Error: " + error);
+		});
+	}
+	
