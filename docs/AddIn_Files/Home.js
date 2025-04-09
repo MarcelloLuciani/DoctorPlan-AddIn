@@ -25,9 +25,6 @@ let messageBanner;
             //$('#button-desc1').text("Writes Hello World in cell A1");
 
 
-            
-            //Funzione base
-            $('#bottone-func-1').on('click', helloWorld);
 
             //Funzioni per gestire la tabella
             $('#cancel-table-button').on('click', deleteTable);
